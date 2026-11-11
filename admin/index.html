@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Arena Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050508;--s1:#0c0c12;--s2:#13131c;--ln:#ffffff14;--ln2:#ffffff26;--mu:#8b8ba3;--tx:#f4f4fa;--lime:#c8ff3a;--red:#ff3b5c;--cy:#38d9ff;--gold:#ffc83d}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--tx);font:600 14px/1.4 Manrope,system-ui,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:0}
+h1,h2,.num{font-family:Unbounded,Manrope,sans-serif}
+.login{display:grid;place-items:center;min-height:100vh;padding:20px}.box{width:100%;max-width:340px;background:var(--s1);border:1px solid var(--ln2);border-radius:18px;padding:26px}
+.box h1{font-size:20px;margin-bottom:4px}.box p{color:var(--mu);margin-bottom:18px}
+input,select,textarea{width:100%;background:var(--s2);border:1px solid var(--ln2);border-radius:10px;padding:10px 12px;outline:0}input:focus,textarea:focus,select:focus{border-color:var(--lime)}
+.btn{background:var(--lime);color:#000;font-weight:800;padding:10px 16px;border-radius:10px;white-space:nowrap}.btn.g{background:var(--s2);color:var(--tx);border:1px solid var(--ln2)}.btn.r{background:#ff3b5c22;color:var(--red);border:1px solid #ff3b5c66}.btn.s{padding:5px 10px;font-size:12px}
+.err{color:var(--red);margin-top:10px;min-height:18px}
+.app{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+aside{border-right:1px solid var(--ln);padding:18px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+aside h1{font-size:17px;padding:4px 10px 16px}aside h1 b{color:var(--lime)}
+aside button{background:none;text-align:left;padding:10px 12px;border-radius:10px;color:var(--mu);font-weight:700}aside button.on{background:#c8ff3a14;color:var(--lime)}aside button:hover{color:var(--tx)}
+aside .sp{flex:1}
+main{padding:22px;max-width:1100px;width:100%}
+h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin:0 0 12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:22px}
+.c{background:linear-gradient(180deg,#111119,#0a0a10);border:1px solid var(--ln);border-radius:14px;padding:14px}.c small{color:var(--mu);display:block;font-size:12px}.c .num{font-size:22px;margin-top:4px}.c.hl{border-color:#c8ff3a55}
+.panel{background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:16px}
+.bars{display:flex;gap:8px;align-items:flex-end;height:130px}.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:11px;color:var(--mu)}
+.bp{display:flex;gap:3px;align-items:flex-end;width:100%;flex:1}.bars i{flex:1;background:linear-gradient(180deg,var(--lime),#7aa31a);border-radius:5px 5px 0 0;min-height:2px}.bars i.b{background:linear-gradient(180deg,var(--cy),#1b7d95)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bar{display:flex;align-items:center;gap:10px;margin:7px 0}.bar span{width:90px;color:var(--mu)}.bar em{flex:1;height:8px;background:var(--s2);border-radius:5px;overflow:hidden}.bar em i{display:block;height:100%;background:var(--lime)}
+.tools{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.tools input{max-width:280px}.tools select{width:auto}
+table{width:100%;border-collapse:collapse}th{text-align:left;color:var(--mu);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--ln)}td{padding:9px 10px;border-bottom:1px solid var(--ln);vertical-align:middle}tr:hover td{background:#ffffff05}
+.wrap{overflow-x:auto;background:var(--s1);border:1px solid var(--ln);border-radius:14px}
+.tag{display:inline-block;padding:1px 8px;border-radius:6px;font-size:11px;font-weight:800;background:var(--s2);color:var(--mu)}.tag.on{background:#c8ff3a22;color:var(--lime)}.tag.bad{background:#ff3b5c22;color:var(--red)}
+.pos{color:var(--lime)}.neg{color:var(--red)}.mono{font-family:ui-monospace,monospace;font-size:12px;color:var(--mu)}
+.pg{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:12px;color:var(--mu)}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln)}.sw:last-child{border:0}.sw small{color:var(--mu);display:block}
+.tg{width:46px;height:26px;border-radius:99px;background:var(--s2);border:1px solid var(--ln2);position:relative;flex:none}.tg::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--mu);transition:.15s}.tg.on{background:#c8ff3a33;border-color:var(--lime)}.tg.on::after{left:23px;background:var(--lime)}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:9;padding:16px}.modal.on{display:grid}.modal .box{max-width:420px}
+.row{display:flex;gap:8px;margin:8px 0}.row>*{flex:1}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:10px 18px;border-radius:10px;font-weight:800;z-index:99}
+@media(max-width:760px){.app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid var(--ln)}aside h1,aside .sp{display:none}aside button{white-space:nowrap}main{padding:14px}.two{grid-template-columns:1fr}}
+</style></head><body>
+<div id="lg" class="login"><div class="box"><h1>Arena <span style="color:var(--lime)">Admin</span></h1><p>Parolni kiriting</p><input id="pw" type="password" placeholder="ADMIN_PASSWORD" autofocus><button class="btn" id="go" style="width:100%;margin-top:12px">Kirish</button><div class="err" id="er"></div></div></div>
+<div id="ap" class="app" style="display:none">
+<aside><h1>ARENA <b>/</b> ADMIN</h1>
+<button data-t="dash" class="on">Boshqaruv</button><button data-t="users">Foydalanuvchilar</button><button data-t="games">O'yinlar</button><button data-t="pay">Tranzaksiyalar</button><button data-t="set">Sozlamalar</button><button data-t="bc">Xabar yuborish</button><div class="sp"></div><button id="out">Chiqish</button></aside>
+<main id="m"></main></div>
+<div class="modal" id="md"><div class="box" id="mb"></div></div>
+<script>
+const $=s=>document.querySelector(s);let TK=sessionStorage.adm||'',TAB='dash',PG=0,Q='',SORT='last',KIND='',timer;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f2=n=>(+n||0).toLocaleString('en',{maximumFractionDigits:2});
+const dt=t=>t?new Date(t*1000).toLocaleString('ru',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+const toast=x=>{const d=document.createElement('div');d.className='toast';d.textContent=x;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)};
+async function api(p,o){const r=await fetch('/api/admin/'+p,{...o,headers:{'Content-Type':'application/json','X-Admin':TK}});
+ if(r.status===401&&p!=='login'){logout();throw new Error('auth')}const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
+const post=(p,b)=>api(p,{method:'POST',body:JSON.stringify(b)});
+function logout(){sessionStorage.adm=TK='';$('#ap').style.display='none';$('#lg').style.display='grid'}
+async function login(){try{const j=await post('login',{password:$('#pw').value});TK=sessionStorage.adm=j.token;start()}catch(e){$('#er').textContent=e.message}}
+$('#go').onclick=login;$('#pw').onkeydown=e=>e.key==='Enter'&&login();$('#out').onclick=logout;
+function start(){$('#lg').style.display='none';$('#ap').style.display='grid';go(TAB)}
+document.querySelectorAll('aside [data-t]').forEach(b=>b.onclick=()=>{PG=0;go(b.dataset.t)});
+function go(t){TAB=t;clearInterval(timer);document.querySelectorAll('aside [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===t));({dash,users,games,pay,set,bc})[t]();if(t==='dash'||t==='games')timer=setInterval(()=>TAB===t&&({dash,games})[t](true),5000)}
+const card=(l,v,h)=>`<div class="c ${h?'hl':''}"><small>${l}</small><div class="num">${v}</div></div>`;
+async function dash(){const s=await api('stats'),mx=Math.max(1,...s.days.map(d=>Math.max(d.games,d.users))),mg=Math.max(1,...s.byGame.map(x=>x.n));
+ $('#m').innerHTML=`<h2>Umumiy ko'rsatkichlar</h2><div class="cards">${card('Hozir onlayn',s.online,1)}${card('Faol stollar',s.tables)}${card('Navbatda',s.queued)}${card('Foydalanuvchilar',s.users)}${card('Yangi (24s)',s.new24)}${card('Faol (24s)',s.dau)}${card('O\'yinlar',s.games)}${card('O\'yinlar (24s)',s.games24)}</div>
+ <h2>Moliya</h2><div class="cards">${card('Komissiya ⭐',f2(s.fee_star),1)}${card('Komissiya 💎',f2(s.fee_ton),1)}${card('Depozit ⭐',f2(s.dep_star))}${card('Depozit 💎',f2(s.dep_ton))}${card('Balanslar ⭐',f2(s.bal_star))}${card('Balanslar 💎',f2(s.bal_ton))}</div>
+ <div class="two"><div class="panel"><h2>So'nggi 7 kun</h2><div class="bars">${s.days.map(d=>`<div><span>${d.games}/${d.users}</span><p class="bp"><i style="height:${d.games/mx*100}%"></i><i class="b" style="height:${d.users/mx*100}%"></i></p>${d.d}</div>`).join('')}</div><small style="color:var(--mu)">yashil — o'yinlar · ko'k — yangi foydalanuvchilar</small></div>
+ <div class="panel"><h2>Mashhur o'yinlar</h2>${s.byGame.map(x=>`<div class="bar"><span>${esc(x.g)}</span><em><i style="width:${x.n/mg*100}%"></i></em><b>${x.n}</b></div>`).join('')||'<small>Hali yo\'q</small>'}
+ <p style="margin-top:12px"><span class="tag ${s.tg?'on':'bad'}">Bot ${s.tg?'@'+esc(s.bot):'token yo\'q'}</span> <span class="tag ${s.cfg.test?'bad':'on'}">${s.cfg.test?'TEST rejimi':'Jonli to\'lovlar'}</span> ${s.cfg.maint?'<span class="tag bad">Texnik ishlar</span>':''}</p></div></div>`}
+async function users(){const j=await api(`users?q=${encodeURIComponent(Q)}&page=${PG}&sort=${SORT}`);
+ $('#m').innerHTML=`<h2>Foydalanuvchilar (${j.total})</h2><div class="tools"><input id="q" placeholder="Ism yoki ID bo'yicha qidirish" value="${esc(Q)}"><select id="so">${[['last','Oxirgi faollik'],['created','Yangi'],['star','⭐ balans'],['ton','💎 balans'],['wins','G\'alabalar'],['games','O\'yinlar']].map(([v,l])=>`<option value="${v}" ${v===SORT?'selected':''}>${l}</option>`).join('')}</select></div>
+ <div class="wrap"><table><tr><th>Foydalanuvchi</th><th>⭐</th><th>💎</th><th>O'yin / G'alaba</th><th>Oxirgi</th><th></th></tr>${j.list.map(u=>`<tr><td><b>${esc(u.name||'—')}</b> ${u.online?'<span class="tag on">online</span>':''}${u.banned?' <span class="tag bad">ban</span>':''}${u.guest?' <span class="tag">mehmon</span>':''}<div class="mono">${esc(u.uid)}</div></td><td>${f2(u.star)}</td><td>${f2(u.ton)}</td><td>${u.games} / ${u.wins}</td><td class="mono">${dt(u.last)}</td><td><button class="btn g s" data-u="${esc(u.uid)}">Boshqarish</button></td></tr>`).join('')}</table></div>${pager(j.total,30)}`;
+ let d;$('#q').oninput=e=>{clearTimeout(d);d=setTimeout(()=>{Q=e.target.value;PG=0;users().then(()=>{const q=$('#q');q.focus();q.setSelectionRange(99,99)})},350)};$('#so').onchange=e=>{SORT=e.target.value;PG=0;users()};
+ document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>edit(j.list.find(u=>u.uid===b.dataset.u)))}
+function pager(total,n){const p=Math.ceil(total/n);if(p<=1)return'';return`<div class="pg"><button class="btn g s" ${PG?'':'disabled'} onclick="PG--;go(TAB)">←</button>${PG+1} / ${p}<button class="btn g s" ${PG+1<p?'':'disabled'} onclick="PG++;go(TAB)">→</button></div>`}
+function edit(u){$('#mb').innerHTML=`<h1 style="font-size:18px">${esc(u.name||'—')}</h1><div class="mono" style="margin-bottom:12px">${esc(u.uid)}</div>
+ <div class="cards" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:10px">${card('⭐',f2(u.star))}${card('💎',f2(u.ton))}${card('Ref',u.refs)}</div>
+ <div class="row"><select id="cu"><option value="star">⭐ Stars</option><option value="ton">💎 TON</option></select><input id="am" type="number" step="any" placeholder="+100 yoki -50"></div><input id="nt" placeholder="Izoh (ixtiyoriy)"><button class="btn" id="ad" style="width:100%;margin-top:8px">Balansni o'zgartirish</button>
+ <div class="row" style="margin-top:12px"><input id="nn" value="${esc(u.name)}" maxlength="20"><button class="btn g" id="rn" style="flex:none">Nomni saqlash</button></div>
+ <div class="row"><button class="btn ${u.banned?'g':'r'}" id="bn">${u.banned?'Banni olib tashlash':'Ban qilish'}</button>${u.online?'<button class="btn g" id="kk">Chiqarib yuborish</button>':''}<button class="btn g" id="cl">Yopish</button></div>`;
+ $('#md').classList.add('on');const act=async b=>{try{await post('user',{uid:u.uid,...b});toast('Saqlandi');$('#md').classList.remove('on');go(TAB)}catch(e){toast(e.message)}};
+ $('#ad').onclick=()=>{const a=parseFloat($('#am').value);if(!a)return toast('Miqdorni kiriting');act({action:'adjust',cur:$('#cu').value,amount:a,note:$('#nt').value})};
+ $('#rn').onclick=()=>act({action:'rename',name:$('#nn').value});$('#bn').onclick=()=>act({action:u.banned?'unban':'ban'});if($('#kk'))$('#kk').onclick=()=>act({action:'kick'});$('#cl').onclick=()=>$('#md').classList.remove('on')}
+$('#md').onclick=e=>{if(e.target.id==='md')$('#md').classList.remove('on')};
+const W=w=>w===-1?'<span class="tag">durang</span>':w===0?'1-o\'yinchi':'2-o\'yinchi';
+async function games(){const j=await api('games?page='+PG);
+ $('#m').innerHTML=`<h2>Jonli stollar (${j.live.length})</h2><div class="panel">${j.live.map(t=>`<div class="sw"><b>${esc(t.g)}</b><span>${t.p.map(esc).join(' vs ')}</span><span>${t.cur==='free'?'bepul':f2(t.stake)+(t.cur==='star'?' ⭐':' 💎')}</span></div>`).join('')||'<small style="color:var(--mu)">Hozir o\'yin yo\'q</small>'}</div>
+ <h2>Tarix</h2><div class="wrap"><table><tr><th>Vaqt</th><th>O'yin</th><th>O'yinchilar</th><th>Stavka</th><th>G'olib</th></tr>${j.list.map(g=>`<tr><td class="mono">${dt(g.ts)}</td><td>${esc(g.g)}</td><td>${esc(g.n0||g.p0)} vs ${esc(g.n1||g.p1)}</td><td>${g.cur==='free'?'—':f2(g.stake)+(g.cur==='star'?' ⭐':' 💎')}</td><td>${g.w===-1?'<span class="tag">durang</span>':esc(g.w===0?(g.n0||g.p0):(g.n1||g.p1))}</td></tr>`).join('')}</table></div><div class="pg"><button class="btn g s" ${PG?'':'disabled'} onclick="PG--;go('games')">←</button>${PG+1}<button class="btn g s" onclick="PG++;go('games')">→</button></div>`}
+async function pay(){const j=await api(`log?page=${PG}&kind=${KIND}`);const nm={deposit:'Depozit',fee:'Komissiya',admin:'Admin'};
+ $('#m').innerHTML=`<h2>Tranzaksiyalar</h2><div class="tools"><select id="kd">${[['','Hammasi'],['deposit','Depozit'],['fee','Komissiya'],['admin','Admin o\'zgartirishlari']].map(([v,l])=>`<option value="${v}" ${v===KIND?'selected':''}>${l}</option>`).join('')}</select></div>
+ <div class="wrap"><table><tr><th>Vaqt</th><th>Tur</th><th>Foydalanuvchi</th><th>Miqdor</th><th>Izoh</th></tr>${j.list.map(l=>`<tr><td class="mono">${dt(l.ts)}</td><td><span class="tag ${l.kind==='deposit'?'on':''}">${nm[l.kind]||l.kind}</span></td><td>${esc(l.name||l.uid)}</td><td class="${l.amt>=0?'pos':'neg'}">${l.amt>0?'+':''}${f2(l.amt)} ${l.cur==='star'?'⭐':'💎'}</td><td class="mono">${esc(l.note)}</td></tr>`).join('')}</table></div><div class="pg"><button class="btn g s" ${PG?'':'disabled'} onclick="PG--;go('pay')">←</button>${PG+1}<button class="btn g s" ${j.list.length<40?'disabled':''} onclick="PG++;go('pay')">→</button></div>`;
+ $('#kd').onchange=e=>{KIND=e.target.value;PG=0;pay()}}
+async function set(){const c=await api('settings');const sw=(k,t,d)=>`<div class="sw"><div><b>${t}</b><small>${d}</small></div><button class="tg ${c[k]?'on':''}" data-k="${k}"></button></div>`;
+ $('#m').innerHTML=`<h2>Sozlamalar</h2><div class="panel"><div class="sw"><div><b>Komissiya (%)</b><small>G'olib yutug'idan ushlab qolinadi</small></div><div style="display:flex;gap:8px"><input id="fee" type="number" min="0" max="50" step="0.5" value="${+(c.fee*100).toFixed(2)}" style="width:90px"><button class="btn s" id="sf">Saqlash</button></div></div>
+ ${sw('test','Test rejimi','Yoqilgan bo\'lsa depozit bepul beriladi. Haqiqiy pulda O\'CHIRING')}${sw('maint','Texnik ishlar','Yangi o\'yinlar boshlanmaydi (davom etayotganlari tugaydi)')}</div>
+ <div class="panel"><h2>Doimiy e'lon (banner)</h2><div class="row"><input id="nt" maxlength="200" value="${esc(c.notice)}" placeholder="Ilovada tepada ko'rinadi. Bo'sh qoldirsangiz o'chadi"><button class="btn" id="sn" style="flex:none">Saqlash</button></div></div>`;
+ document.querySelectorAll('.tg').forEach(b=>b.onclick=async()=>{if(b.dataset.k==='test'&&c.test===1?false:b.dataset.k==='test'&&!confirm('Test rejimini yoqasizmi? Depozitlar bepul bo\'ladi.'))return;await post('settings',{[b.dataset.k]:!c[b.dataset.k]});set()});
+ $('#sf').onclick=async()=>{try{await post('settings',{fee:$('#fee').value/100});toast('Saqlandi')}catch(e){toast(e.message)}};$('#sn').onclick=async()=>{await post('settings',{notice:$('#nt').value});toast('Saqlandi')}}
+function bc(){$('#m').innerHTML=`<h2>Xabar yuborish</h2><div class="panel"><textarea id="tx" rows="5" maxlength="500" placeholder="Xabar matni"></textarea>
+ <div class="row" style="margin-top:10px"><select id="ch"><option value="0">Ilovadagi onlayn foydalanuvchilarga</option><option value="1">Telegram orqali hammaga (bot)</option></select><button class="btn" id="sb" style="flex:none">Yuborish</button></div></div>`;
+ $('#sb').onclick=async()=>{const t=$('#tx').value.trim();if(!t)return;if($('#ch').value==='1'&&!confirm('Barcha Telegram foydalanuvchilariga yuborilsinmi?'))return;try{const j=await post('broadcast',{text:t,telegram:$('#ch').value==='1'});toast('Yuborildi: '+j.sent);$('#tx').value=''}catch(e){toast(e.message)}}}
+if(TK)start();
+</script></body></html>
