@@ -1,0 +1,8 @@
+services:
+  arena:
+    build: .
+    restart: always
+    env_file: .env
+    environment: { HOST: 0.0.0.0, DB_PATH: /data/arena.db }
+    ports: ["127.0.0.1:3000:3000"]
+    volumes: ["./data:/data"]
